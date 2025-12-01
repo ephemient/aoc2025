@@ -1,0 +1,39 @@
+cabal-version: 3.0
+name:          aoc2025
+version:       0.1.0.0
+license:       BSD-3-Clause
+license-file:  LICENSE
+maintainer:    ephemient@gmail.com
+author:        Daniel Lin
+homepage:      https://github.com/ephemient/aoc2025/tree/main/hs
+synopsis:
+    Please see the README on GitHub at <https://github.com/ephemient/aoc2025/blob/main/README.md>
+
+category:      None
+
+source-repository head
+    type:     git
+    location: https://github.com/ephemient/aoc2025.git
+    subdir:   hs
+
+library
+    exposed-modules:  Day1
+    hs-source-dirs:   src
+    default-language: GHC2024
+    ghc-options:      -Wall
+    build-depends:
+        base ^>=4.21.0.0,
+        text ^>=2.1.3
+
+executable aoc2025
+    main-is:          Main.hs
+    c-sources:        app/cbits/main.c
+    hs-source-dirs:   app
+    default-language: GHC2024
+    ghc-options:      -Wall -no-hs-main -threaded
+    build-depends:
+        aoc2025,
+        base ^>=4.21.0.0,
+        containers ^>=0.7,
+        filepath ^>=1.5.4.0,
+        text ^>=2.1.3
