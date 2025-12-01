@@ -1,0 +1,23 @@
+[project]
+name = "aoc2025"
+version = "0.1.0"
+description = ""
+license = "BSD-3-Clause"
+requires-python = ">=3.14"
+
+[[project.authors]]
+name = "Daniel Lin"
+email = "ephemient@gmail.com"
+
+[project.urls]
+Repository = "https://github.com/ephemient/aoc2025.git"
+
+[build-system]
+requires = ["uv_build>=0.7.19,<0.8.0"]
+build-backend = "uv_build"
+
+[project.entry-points.'aoc2025.days']
+1 = "aoc2025.day1:parts"
+
+[project.scripts]
+aoc2025 = "aoc2025.cli:main"
