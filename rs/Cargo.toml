@@ -1,0 +1,17 @@
+[package]
+name = "aoc2025"
+version = "0.1.0"
+authors = ["Daniel Lin <ephemient@gmail.com>"]
+license = "BSD-3-Clause"
+edition = "2024"
+homepage = "https://github.com/ephemient/aoc2025/tree/main/rs"
+
+[lib]
+name = "aoc2025"
+path = "src/lib.rs"
+
+[[bin]]
+name = "aoc2025"
+path = "src/main.rs"
+
+[dependencies]
