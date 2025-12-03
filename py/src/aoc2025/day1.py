@@ -1,4 +1,4 @@
-def _day1(input: str):
+def _day1(input: str) -> tuple[int, int]:
     pos, zeros, turns = 50, 0, 0
     for line in input.splitlines():
         rotation = (

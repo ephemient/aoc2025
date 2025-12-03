@@ -6,3 +6,18 @@ requires-python = ">=3.14"
 name = "aoc2025"
 version = "0.1.0"
 source = { editable = "." }
+dependencies = [
+    { name = "cached-iterators" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "cached-iterators", specifier = ">=1.0.3" }]
+
+[[package]]
+name = "cached-iterators"
+version = "1.0.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/16/c2/9913e76ab6f31ee26bec6954018af8935e9e4a785feb78d8a0d12ab699a2/cached_iterators-1.0.3.tar.gz", hash = "sha256:38e07a8364edeadfdd8c6dfb37b9154d5bf151a41e3dfa294e84a1ce0fdab38c", size = 3313, upload-time = "2024-07-09T18:20:21.902Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/fd/39/a112ec52858686d24d1d5de730a2c2f1969908d2ccf63828295c70792afc/cached_iterators-1.0.3-py3-none-any.whl", hash = "sha256:ab9b27cd9a763b8b5d844324692c544bcb1dd0bc7b1656f13db93aed9124c12b", size = 4843, upload-time = "2024-07-09T18:20:18.896Z" },
+]
