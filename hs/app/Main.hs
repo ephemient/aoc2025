@@ -10,7 +10,8 @@ import Data.Text (Text)
 import Data.Text qualified as T (show)
 import Data.Text.IO qualified as TIO (putStrLn, readFile)
 import Day1 (day1)
-import qualified Day2 (part1, part2)
+import Day2 qualified (part1, part2)
+import Day3 (day3)
 import System.Environment (getArgs, lookupEnv)
 import System.FilePath (combine)
 
@@ -20,7 +21,12 @@ getDayInput day = do
   TIO.readFile . combine dataDir $ "day" <> day <> ".txt"
 
 days :: Map String [Text -> Text]
-days = Map.fromList [("1", [T.show . day1]), ("2", [T.show . Day2.part1, T.show . Day2.part2])]
+days =
+  Map.fromList
+    [ ("1", [T.show . day1]),
+      ("2", [T.show . Day2.part1, T.show . Day2.part2]),
+      ("3", [T.show . day3 2, T.show . day3 12])
+    ]
 
 main :: IO ()
 main = do
