@@ -1,30 +1,39 @@
 package com.github.ephemient.aoc2025
 
 fun day4(input: String): Pair<Int, Int> {
-    var points = buildSet {
-        for ((y, line) in input.lines().withIndex()) {
-            for ((x, char) in line.withIndex()) {
-                if (char == '@') add(x to y)
+    val points = mutableMapOf<Pair<Int, Int>, Int>()
+    for ((y, line) in input.lines().withIndex()) {
+        for ((x, char) in line.withIndex()) {
+            if (char == '@') points[x to y] = -1
+        }
+    }
+    for ((x, y) in points.keys) {
+        for (x in x - 1..x + 1) {
+            for (y in y - 1..y + 1) {
+                points.computeIfPresent(x to y) { _, count -> count + 1}
             }
         }
     }
-    val initial = points.size
-    points = step(points) ?: return 0 to 0
-    val part1 = initial - points.size
-    while (true) points = step(points) ?: break
-    return part1 to initial - points.size
-}
-
-private fun step(points: Set<Pair<Int, Int>>): Set<Pair<Int, Int>>? = buildSet {
-    var found = false
-    points.filterTo(this) { (x, y) ->
-        val count = (x - 1..x + 1).sumOf { x -> (y - 1..y + 1).count { y -> x to y in points } }
-        if (count > 4) {
-            true
-        } else {
-            found = true
-            false
+    val removals = mutableListOf<Pair<Int, Int>>()
+    val iterator = points.entries.iterator()
+    for ((point, count) in iterator) {
+        if (count >= 4) continue
+        iterator.remove()
+        removals.add(point)
+    }
+    val part1 = removals.size
+    var part2 = 0
+    while (true) {
+        val (x, y) = removals.removeLastOrNull() ?: break
+        part2++
+        for (x in x - 1..x + 1) {
+            for (y in y - 1..y + 1) {
+                points.computeIfPresent(x to y) { key, count ->
+                    if (count == 4) removals.add(key)
+                    count - 1
+                }
+            }
         }
     }
-    if (!found) return null
+    return part1 to part2
 }
