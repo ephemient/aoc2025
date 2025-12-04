@@ -11,7 +11,7 @@ fn day2(input: &str, factors: &[(u32, isize)]) -> isize {
                 factors
                     .iter()
                     .map_while(|(n, c)| {
-                        let scale0 = 10isize.pow(*n - 1);
+                        let scale0 = 10isize.pow(n - 1);
                         let mut power = 1;
                         let mut scale = 1;
                         let mut acc = 0;

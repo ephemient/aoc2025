@@ -1,4 +1,4 @@
-use aoc2025::{day1, day2, day3};
+use aoc2025::{day1, day2, day3, day4};
 use std::collections::HashSet;
 use std::env;
 use std::fs;
@@ -36,6 +36,13 @@ fn main() -> io::Result<()> {
         let input = get_day_input(3)?;
         println!("{:?}", day3::part1(&input));
         println!("{:?}", day3::part2(&input));
+        println!();
+    }
+
+    if args.is_empty() || args.contains("4") {
+        println!("Day 4");
+        let input = get_day_input(4)?;
+        println!("{:?}", day4::solve(&input));
         println!();
     }
 
