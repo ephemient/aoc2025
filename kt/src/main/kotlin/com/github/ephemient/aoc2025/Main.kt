@@ -7,6 +7,7 @@ val days: Map<String, List<(String) -> Any?>> = mapOf(
     "2" to listOf(Day2::part1, Day2::part2),
     "3" to listOf(Day3::part1, Day3::part2),
     "4" to listOf(::day4),
+    "5" to listOf(::day5),
 )
 
 fun main(vararg args: String) {
