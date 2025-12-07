@@ -24,6 +24,7 @@ library
     Day4
     Day5
     Day6
+    Day7
 
   hs-source-dirs: src
   default-language: GHC2024

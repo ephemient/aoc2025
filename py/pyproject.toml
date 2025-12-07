@@ -26,6 +26,7 @@ build-backend = "uv_build"
 4 = "aoc2025.day4:parts"
 5 = "aoc2025.day5:parts"
 6 = "aoc2025.day6:parts"
+7 = "aoc2025.day7:parts"
 
 [project.scripts]
 aoc2025 = "aoc2025.cli:main"
