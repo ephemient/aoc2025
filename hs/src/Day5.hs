@@ -1,4 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PatternSynonyms #-}
 
 module Day5 where
@@ -6,22 +5,22 @@ module Day5 where
 import Data.Ix (inRange, rangeSize)
 import Data.Set qualified as Set (empty, lookupLE, lookupMax, lookupMin, singleton, spanAntitone, toList)
 import Data.Text (Text)
-import Data.Text qualified as T (breakOn, lines, pattern Empty, pattern (:<))
+import Data.Text qualified as T (lines, null, pattern Empty, pattern (:<))
 import Data.Text.Read qualified as T (decimal)
 
 day5 :: Text -> (Int, Int)
 day5 input =
   ( length
       [ ()
-      | line <- T.lines input2,
+      | line <- input2,
         (a, T.Empty) <- either (const mempty) pure $ T.decimal line,
         maybe False (`inRange` a) $ Set.lookupLE (a, maxBound @Int) ranges
       ],
     sum $ rangeSize <$> Set.toList ranges
   )
   where
-    (input1, input2) = T.breakOn "\n\n" input
-    ranges = foldl' addRange Set.empty $ T.lines input1
+    (input1, input2) = break T.null $ T.lines input
+    ranges = foldl' addRange Set.empty input1
     addRange ranges line
       | Right (lo, '-' T.:< rest) <- T.decimal line,
         Right (hi, T.Empty) <- T.decimal rest,
