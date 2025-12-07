@@ -1,4 +1,4 @@
-from bisect import bisect_left
+from bisect import bisect_left, bisect_right
 from functools import itemgetter
 from itertools import takewhile
 
@@ -17,9 +17,9 @@ def _day5(input: str) -> tuple[int, int]:
         else:
             ranges.append((start, end))
     return sum(
-        (i := int(line),) and any(i in range(start, end + 1) for start, end in ranges)
+        (j := bisect_right(ranges, i := int(line), key=itemgetter(1))) < len(ranges)
+        and ranges[j][0] <= i
         for line in lines
-        if line
     ), sum(end - start + 1 for start, end in ranges)
 
 

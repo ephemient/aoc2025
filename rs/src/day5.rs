@@ -1,31 +1,38 @@
-use std::cmp::{max, min};
+use std::cmp::max;
 
 pub fn solve(input: &str) -> (usize, usize) {
     let mut lines = input.lines();
-    let mut ranges = Vec::<(usize, usize)>::new();
-    for line in lines.by_ref() {
-        if let Some((lhs, rhs)) = line.split_once('-')
-            && let Ok(lo) = lhs.parse()
-            && let Ok(hi) = rhs.parse()
-        {
-            let i = ranges.partition_point(|range| range.1 < lo);
-            let n = ranges[i..].partition_point(|range| range.0 <= hi);
-            let range = ranges
-                .drain(i..i + n)
-                .fold((lo, hi), |(a, b), (c, d)| (min(a, c), max(b, d)));
-            ranges.insert(i, range);
+    let mut ranges = lines
+        .by_ref()
+        .map_while(|line| {
+            let (lhs, rhs) = line.split_once('-')?;
+            Some((lhs.parse::<usize>().ok()?, rhs.parse::<usize>().ok()?))
+        })
+        .collect::<Vec<_>>();
+    ranges.sort_unstable();
+    let mut count = 0;
+    for i in 0..ranges.len() {
+        let (lo, hi) = ranges[i];
+        let j = ranges[..count]
+            .binary_search_by(|range| range.1.cmp(&lo))
+            .unwrap_or_else(|j| j);
+        let range = &mut ranges[j];
+        if j < count {
+            range.1 = max(range.1, hi);
         } else {
-            break;
+            *range = (lo, hi);
         }
+        count = j + 1;
     }
+    ranges.drain(count..);
     (
         lines
             .filter(|line| {
-                if let Ok(id) = line.parse::<usize>() {
-                    ranges.iter().any(|(lo, hi)| *lo <= id && id <= *hi)
-                } else {
-                    false
-                }
+                line.parse().is_ok_and(|id| {
+                    !ranges
+                        .binary_search_by(|range| range.1.cmp(&id))
+                        .is_err_and(|i| ranges.get(i).is_some_and(|range| id < range.0))
+                })
             })
             .count(),
         ranges.iter().map(|(lo, hi)| hi - lo + 1).sum(),
