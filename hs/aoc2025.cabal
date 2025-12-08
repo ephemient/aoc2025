@@ -27,6 +27,9 @@ library
     Day7
     Day8
 
+  other-modules:
+    Data.Map.Extra
+
   hs-source-dirs: src
   default-language: GHC2024
   ghc-options: -Wall
@@ -53,3 +56,21 @@ executable aoc2025
     containers ^>=0.7,
     filepath ^>=1.5.4.0,
     text ^>=2.1.3,
+
+benchmark aoc2025-bench
+  type: exitcode-stdio-1.0
+  hs-source-dirs: bench
+  main-is: Main.hs
+  c-sources: bench/cbits/main.c
+  build-depends:
+    aoc2025,
+    base ^>=4.21.0.0,
+    criterion ^>=1.6.4.0,
+    filepath >=1.5.4.0,
+    text ^>=2.1.3,
+
+  ghc-options:
+    -no-hs-main
+    -threaded
+
+  default-language: GHC2024

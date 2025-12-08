@@ -1,14 +1,12 @@
 module Main (main) where
 
+import Control.Arrow ((***))
 import Control.Monad (forM_)
 import Data.List (find)
-import Data.Map (Map)
-import Data.Map qualified as Map (fromList, null, restrictKeys, toList)
 import Data.Maybe (fromMaybe)
-import Data.Set qualified as Set (fromList)
+import Data.Set qualified as Set (fromList, member)
 import Data.Text (Text)
-import Data.Text qualified as T (show)
-import Data.Text.IO qualified as TIO (putStrLn, readFile)
+import Data.Text.IO qualified as TIO (readFile)
 import Day1 (day1)
 import Day2 qualified (part1, part2)
 import Day3 (day3)
@@ -20,29 +18,33 @@ import Day8 (day8)
 import System.Environment (getArgs, lookupEnv)
 import System.FilePath (combine)
 
-getDayInput :: String -> IO Text
+getDayInput :: Int -> IO Text
 getDayInput day = do
   dataDir <- fromMaybe "." . find (not . null) <$> lookupEnv "AOC2025_DATADIR"
-  TIO.readFile . combine dataDir $ "day" <> day <> ".txt"
+  TIO.readFile . combine dataDir $ "day" <> show day <> ".txt"
 
-days :: Map String [Text -> Text]
+days :: [(Int, String, Text -> IO ())]
 days =
-  Map.fromList
-    [ ("1", [T.show . day1]),
-      ("2", [T.show . Day2.part1, T.show . Day2.part2]),
-      ("3", [T.show . day3 2, T.show . day3 12]),
-      ("4", [T.show . day4]),
-      ("5", [T.show . day5]),
-      ("6", [T.show . Day6.part1, T.show . Day6.part2]),
-      ("7", [T.show . day7]),
-      ("8", [T.show . Day8.day8 1000])
-    ]
+  [ run 1 print2 [day1],
+    run 2 print [Day2.part1, Day2.part2],
+    run 3 print [day3 2, day3 12],
+    run 4 print2 [day4],
+    run 5 print2 [day5],
+    run 6 print [Day6.part1, Day6.part2],
+    run 7 print2 [day7],
+    run 8 (putStrLn2 . (show *** maybe "null" show)) [Day8.day8 1000]
+  ]
+  where
+    run day showIO funcs = (day, show day, run' showIO funcs)
+    run' showIO funcs input = mapM_ (showIO . ($ input)) funcs
+    print2 (a, b) = print a >> print b
+    putStrLn2 (a, b) = putStrLn a >> putStrLn b
 
 main :: IO ()
 main = do
-  days' <- fmap (Map.restrictKeys days . Set.fromList) getArgs
-  forM_ (Map.toList (if Map.null days' then days else days')) $ \(day, parts) -> do
-    putStrLn $ "Day " <> day
-    input <- getDayInput day
-    mapM_ (TIO.putStrLn . ($ input)) parts
+  args <- Set.fromList <$> getArgs
+  let days' = [spec | spec@(_, name, _) <- days, name `Set.member` args]
+  forM_ (if null days' then days else days') $ \(day, name, run) -> do
+    putStrLn $ "Day " <> name
+    run =<< getDayInput day
     putStrLn ""

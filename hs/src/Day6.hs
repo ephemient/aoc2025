@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Day6 where
+module Day6 (part1, part2) where
 
 import Data.Char (isSpace)
 import Data.List (foldl1', transpose)
