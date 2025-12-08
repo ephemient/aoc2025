@@ -1,5 +1,5 @@
 from collections import defaultdict
-from heapq import heappop, heappush
+from heapq import heapify, heappop
 from math import prod
 
 
@@ -8,12 +8,12 @@ def _day8(input: str, n: int = 1000) -> tuple[int, int | None]:
     part1 = 0
     components = len(nodes)
     mapping = {}
-    edges = []
-    for i, node in enumerate(nodes):
-        for j in range(i + 1, len(nodes)):
-            heappush(
-                edges, (sum((a - b) * (a - b) for a, b in zip(node, nodes[j])), i, j)
-            )
+    edges = [
+        (sum((a - b) * (a - b) for a, b in zip(node, nodes[j])), i, j)
+        for i, node in enumerate(nodes)
+        for j in range(i + 1, len(nodes))
+    ]
+    heapify(edges)
 
     def lookup(key: int) -> int:
         if key not in mapping:
