@@ -16,6 +16,7 @@ import Day4 (day4)
 import Day5 (day5)
 import Day6 qualified (part1, part2)
 import Day7 (day7)
+import Day8 (day8)
 import System.Environment (getArgs, lookupEnv)
 import System.FilePath (combine)
 
@@ -33,7 +34,8 @@ days =
       ("4", [T.show . day4]),
       ("5", [T.show . day5]),
       ("6", [T.show . Day6.part1, T.show . Day6.part2]),
-      ("7", [T.show . day7])
+      ("7", [T.show . day7]),
+      ("8", [T.show . Day8.day8 1000])
     ]
 
 main :: IO ()
