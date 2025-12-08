@@ -15,5 +15,10 @@ def main():
             Path(environ.get("AOC2025_DATADIR") or ".") / f"day{day}.txt"
         ).read_text()
         for part in parts:
-            print(part(input))
+            output = part(input)
+            if isinstance(output, tuple):
+                for part in output:
+                    print(part)
+            else:
+                print(output)
         print()

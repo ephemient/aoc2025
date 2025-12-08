@@ -21,7 +21,7 @@ build-backend = "uv_build"
 
 [project.entry-points.'aoc2025.days']
 1 = "aoc2025.day1:parts"
-2 = "aoc2025.day3:parts"
+2 = "aoc2025.day2:parts"
 3 = "aoc2025.day3:parts"
 4 = "aoc2025.day4:parts"
 5 = "aoc2025.day5:parts"
