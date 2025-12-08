@@ -18,7 +18,20 @@ fun main(vararg args: String) {
     for ((day, parts) in days.filterKeys(args.toSet()::contains).ifEmpty { days }) {
         println("Day $day")
         val input = File(datadir, "day$day.txt").readText()
-        for (part in parts) println(part(input))
+        for (part in parts) {
+            when (val output = part(input)) {
+                is Pair<*, *> -> {
+                    println(output.first)
+                    println(output.second)
+                }
+                is Triple<*, *, *> -> {
+                    println(output.first)
+                    println(output.second)
+                    println(output.third)
+                }
+                else -> println(output)
+            }
+        }
         println()
     }
 }
