@@ -34,9 +34,7 @@ pub fn solve(input: &str, n: usize) -> (usize, Option<isize>) {
     let mut components = nodes.len();
     let mut mapping = Mapping((0..nodes.len()).collect());
     for (m, (i, j, _)) in edges.into_iter().enumerate() {
-        let (a, b) = (mapping.lookup(i), mapping.lookup(j));
-        if a != b {
-            mapping.0[max(a, b)] = min(a, b);
+        if mapping.merge(i, j) {
             components -= 1;
         }
         if m + 1 == n {
@@ -66,5 +64,11 @@ impl Mapping {
             self.0[key] = value;
         }
         value
+    }
+
+    fn merge(&mut self, i: usize, j: usize) -> bool {
+        let (a, b) = (self.lookup(i), self.lookup(j));
+        self.0[max(a, b)] = min(a, b);
+        a != b
     }
 }
