@@ -1,13 +1,19 @@
 from collections import defaultdict
+from heapq import heappop, heappush
 from math import prod
-from operator import itemgetter
 
 
 def _day8(input: str, n: int = 1000) -> tuple[int, int | None]:
     nodes = [tuple(map(int, line.split(","))) for line in input.splitlines()]
     part1 = 0
     components = len(nodes)
-    mapping: dict[int, int] = {}
+    mapping = {}
+    edges = []
+    for i, node in enumerate(nodes):
+        for j in range(i + 1, len(nodes)):
+            heappush(
+                edges, (sum((a - b) * (a - b) for a, b in zip(node, nodes[j])), i, j)
+            )
 
     def lookup(key: int) -> int:
         if key not in mapping:
@@ -16,16 +22,8 @@ def _day8(input: str, n: int = 1000) -> tuple[int, int | None]:
         mapping[key] = value
         return value
 
-    for m, (i, j, _) in enumerate(
-        sorted(
-            (
-                (i, j, sum((a - b) * (a - b) for a, b in zip(node, nodes[j])))
-                for (i, node) in enumerate(nodes)
-                for j in range(i + 1, len(nodes))
-            ),
-            key=itemgetter(2),
-        )
-    ):
+    for m in range(len(edges)):
+        _, i, j = heappop(edges)
         a, b = lookup(i), lookup(j)
         if a != b:
             mapping[max(a, b)] = min(a, b)

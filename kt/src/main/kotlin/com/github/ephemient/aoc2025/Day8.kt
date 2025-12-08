@@ -1,16 +1,16 @@
 package com.github.ephemient.aoc2025
 
+import java.util.PriorityQueue
+
 fun day8(input: String, n: Int = 1000): Pair<Int, Long?> {
     val nodes = input.lines().mapNotNull { line ->
         line.split(',').mapNotNull { it.toLongOrNull() }.ifEmpty { null }
     }
-    val edges = buildList {
-        for ((i, node) in nodes.withIndex()) {
-            for (j in i + 1 ..< nodes.size) {
-                add(Triple(i, j, node.zip(nodes[j], Long::minus).sumOf { it * it }))
-            }
+    val edges = PriorityQueue<Triple<Int, Int, Long>>(compareBy { it.third })
+    for ((i, node) in nodes.withIndex()) {
+        for (j in i + 1 ..< nodes.size) {
+            edges.add(Triple(i, j, node.zip(nodes[j], Long::minus).sumOf { it * it }))
         }
-        sortBy { it.third }
     }
     var components = nodes.size
     val mapping = mutableMapOf<Int, Int>()
@@ -19,7 +19,8 @@ fun day8(input: String, n: Int = 1000): Pair<Int, Long?> {
         return lookup(value).also { mapping[key] = it }
     }
     var part1 = 0
-    edges.forEachIndexed { index, (i, j) ->
+    for (index in edges.indices) {
+        val (i, j) = edges.remove()
         val a = lookup(i)
         val b = lookup(j)
         if (a != b) {
