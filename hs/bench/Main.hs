@@ -62,7 +62,7 @@ main =
         bench "Day 8" $ nf (day8 1000) input,
       env (getDayInput 9) $ \input ->
         bgroup
-          "Day 6"
+          "Day 9"
           [ bench "part 1" $ nf Day9.part1 input,
             bench "part 2" $ nf Day9.part2 input
           ]
