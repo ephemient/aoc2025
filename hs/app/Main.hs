@@ -15,6 +15,7 @@ import Day5 (day5)
 import Day6 qualified (part1, part2)
 import Day7 (day7)
 import Day8 (day8)
+import Day9 qualified (part1, part2)
 import System.Environment (getArgs, lookupEnv)
 import System.FilePath (combine)
 
@@ -32,7 +33,8 @@ days =
     run 5 print2 [day5],
     run 6 print [Day6.part1, Day6.part2],
     run 7 print2 [day7],
-    run 8 (putStrLn2 . (show *** maybe "null" show)) [Day8.day8 1000]
+    run 8 (putStrLn2 . (show *** maybe "null" show)) [Day8.day8 1000],
+    run 9 print [Day9.part1, Day9.part2]
   ]
   where
     run day showIO funcs = (day, show day, run' showIO funcs)

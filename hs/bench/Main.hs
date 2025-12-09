@@ -11,10 +11,10 @@ import Day2 qualified (part1, part2)
 import Day3 (day3)
 import Day4 (day4)
 import Day5 (day5)
-import Day5a (day5a)
 import Day6 qualified (part1, part2)
 import Day7 (day7)
 import Day8 (day8)
+import Day9 qualified (part1, part2)
 import System.Environment (getEnv, lookupEnv, setEnv, unsetEnv)
 import System.FilePath (combine)
 
@@ -49,11 +49,7 @@ main =
       env (getDayInput 4) $ \input ->
         bench "Day 4" $ nf day4 input,
       env (getDayInput 5) $ \input ->
-        bgroup
-          "Day 5"
-          [ bench "v1" $ nf day5 input,
-            bench "v2" $ nf day5a input
-          ],
+        bench "Day 5" $ nf day5 input,
       env (getDayInput 6) $ \input ->
         bgroup
           "Day 6"
@@ -63,5 +59,11 @@ main =
       env (getDayInput 7) $ \input ->
         bench "Day 7" $ nf day7 input,
       env (getDayInput 8) $ \input ->
-        bench "Day 8" $ nf (day8 1000) input
+        bench "Day 8" $ nf (day8 1000) input,
+      env (getDayInput 9) $ \input ->
+        bgroup
+          "Day 6"
+          [ bench "part 1" $ nf Day9.part1 input,
+            bench "part 2" $ nf Day9.part2 input
+          ]
     ]
