@@ -1,3 +1,4 @@
+use aoc2025::day9;
 use aoc2025::{day1, day2, day3, day4, day5, day6, day7, day8};
 use std::collections::HashSet;
 use std::env;
@@ -85,6 +86,14 @@ fn main() -> io::Result<()> {
             "{}",
             part2.map_or_else(|| "null".to_string(), |part2| part2.to_string())
         );
+        println!();
+    }
+
+    if args.is_empty() || args.contains("9") {
+        println!("Day 9");
+        let input = get_day_input(9)?;
+        println!("{}", day9::part1(&input));
+        println!("{}", day9::part2(&input));
         println!();
     }
 
