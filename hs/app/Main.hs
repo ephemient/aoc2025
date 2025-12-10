@@ -8,7 +8,7 @@ import Data.Set qualified as Set (fromList, member)
 import Data.Text (Text)
 import Data.Text.IO qualified as TIO (readFile)
 import Day1 (day1)
-import Day10 qualified (part1)
+import Day10 qualified (part1, part2)
 import Day2 qualified (part1, part2)
 import Day3 (day3)
 import Day4 (day4)
@@ -36,7 +36,7 @@ days =
     run 7 print2 [day7],
     run 8 (putStrLn2 . (show *** maybe "null" show)) [Day8.day8 1000],
     run 9 print [Day9.part1, Day9.part2],
-    run 10 print [Day10.part1]
+    run 10 (>>= print) [pure . Day10.part1, Day10.part2]
   ]
   where
     run day showIO funcs = (day, show day, run' showIO funcs)
