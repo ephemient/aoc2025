@@ -6,6 +6,7 @@ license = "BSD-3-Clause"
 requires-python = ">=3.14"
 dependencies = [
     "cached-iterators>=1.0.3",
+    "natsort>=8.4.0",
 ]
 
 [[project.authors]]
@@ -19,6 +20,13 @@ Repository = "https://github.com/ephemient/aoc2025.git"
 requires = ["uv_build>=0.7.19,<0.8.0"]
 build-backend = "uv_build"
 
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-benchmark[histogram]>=5.2.3",
+    "ruff>=0.14.8",
+]
+
 [project.entry-points.'aoc2025.days']
 1 = "aoc2025.day1:parts"
 2 = "aoc2025.day2:parts"
@@ -29,6 +37,12 @@ build-backend = "uv_build"
 7 = "aoc2025.day7:parts"
 8 = "aoc2025.day8:parts"
 9 = "aoc2025.day9:parts"
+11 = "aoc2025.day11:parts"
 
 [project.scripts]
 aoc2025 = "aoc2025.cli:main"
+
+[tool.pytest.ini_options]
+addopts = '--doctest-modules --benchmark-disable --benchmark-sort=fullname --import-mode=importlib'
+required_plugins = ['pytest-benchmark']
+python_files = ['src/**/*.py', 'tests/**/*.py']

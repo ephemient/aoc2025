@@ -3,12 +3,14 @@ from os import environ
 from pathlib import Path
 from sys import argv
 
+from natsort import natsorted
+
 
 def main():
     args = set(argv)
     days = entry_points(group="aoc2025.days")
     days = [day for day in days if day.name in args] or days
-    for day in days:
+    for day in natsorted(days, key=lambda day: day.name):
         day, parts = day.name, day.load()
         print(f"Day {day}")
         input = (
