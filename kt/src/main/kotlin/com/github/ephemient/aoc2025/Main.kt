@@ -12,6 +12,7 @@ private val days: Map<String, List<(String) -> Any?>> = mapOf(
     "7" to listOf(::day7),
     "8" to listOf { day8(it) },
     "9" to listOf(Day9::part1, Day9::part2),
+    "11" to listOf(Day11::part1, Day11::part2),
 )
 
 internal fun getDayInput(day: Int): String =
